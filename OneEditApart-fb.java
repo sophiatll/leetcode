@@ -34,56 +34,36 @@ removing 1 char
 
 class Solution {
   public static boolean oneEditApart(String s1, String s2) {
-    int l1 = s1.length();
-    int l2 = s2.length();
     
-    if(Math.abs(l1-l2) >1) return false;
-    
-    if(l1 == l2) {
-      return oneReplace(s1, s2);
-    }
-    else if(l1>l2){
-      return oneDelete(s1, s2);
-    }
-    else {
-      return oneDelete(s2, s1);
-    }
+    if(Math.abs(s1.length()-s2.length()) >1) return false;
     
     
-  }
-  
-  private static boolean oneReplace(String s1, String s2) {
-    boolean foundOneDiff = false;
-    for(int i=0; i<s1.length(); i++) {
-      if(s1.charAt(i) != s2.charAt(i)){
-        if(foundOneDiff) return false;
-          
-        foundOneDiff = true;
-      }
-    }
-    return true;
-  }
-  
-  private static boolean oneDelete(String longStr, String shortStr) {
-    boolean foundOneDiff = false;
+    String longStr = s1.length()>=s2.length()? s1: s2;
+    String shortStr = s1.length()>=s2.length()? s2: s1;
+    
     int i = 0;
-    int j= 0;
-    while(j<shortStr.length() && i<longStr.length()) {
-      if(longStr.charAt(i) != shortStr.charAt(j)){
-        if(foundOneDiff)  return false;
+    int j = 0;
+    boolean foundDiff = false;
+    
+    while(i<longStr.length() && j<shortStr.length()) {
+      if(longStr.charAt(i) != shortStr.charAt(j)) {
+        if(foundDiff) return false;
         
-        foundOneDiff = true;
-        i++;
-      }
-      else {
+        foundDiff = true;
+        if(longStr.length() == shortStr.length()) {
+          i++;
+          j++;
+        }
+        else {
+          i++;
+        }
+      } else {
         i++;
         j++;
       }
-      
     }
-    return true;
+    return foundDiff || longStr.length()>shortStr.length();
   }
-  
   
   public static void main(String[] args) {
     System.out.println(oneEditApart("cat", "dog"));
@@ -92,6 +72,7 @@ class Solution {
     System.out.println(oneEditApart("cat", "cast"));
     System.out.println(oneEditApart("cat", "at"));
     System.out.println(oneEditApart("cat", "ats"));
+    System.out.println(oneEditApart("cat", "cat"));
   }
 }
 
