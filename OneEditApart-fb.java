@@ -42,8 +42,11 @@ class Solution {
     if(l1 == l2) {
       return oneReplace(s1, s2);
     }
-    else {
+    else if(l1>l2){
       return oneDelete(s1, s2);
+    }
+    else {
+      return oneDelete(s2, s1);
     }
     
     
@@ -61,24 +64,22 @@ class Solution {
     return true;
   }
   
-  private static boolean oneDelete(String s1, String s2) {
-    String longStr = s1;
-    String shortStr = s2;
-    if(s2.length()>s1.length()){
-      longStr = s2;
-      shortStr = s1;
-    }
+  private static boolean oneDelete(String longStr, String shortStr) {
     boolean foundOneDiff = false;
-    //"cat" "at"
-    for(int i=0, j=0; j<shortStr.length(); i++) {
+    int i = 0;
+    int j= 0;
+    while(j<shortStr.length() && i<longStr.length()) {
       if(longStr.charAt(i) != shortStr.charAt(j)){
         if(foundOneDiff)  return false;
         
         foundOneDiff = true;
+        i++;
       }
       else {
+        i++;
         j++;
       }
+      
     }
     return true;
   }
