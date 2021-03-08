@@ -1,26 +1,20 @@
 import java.util.*;
 
 class Solution {
-  
-  
-  void merge(int[] a, int s1, int e1, int s2, int e2){
-    int len = e2-s1+1;
+  void merge(int[] a, int start, int mid, int end){
+    int len = end - start +1;
     int[] b = new int[len];
-    int i=s1; 
-    int j=s2;
+    int i=start; 
+    int j=mid+1;
     int k = 0;
-    while(i<=e1 && j<=e2) {
+    while(i<=mid && j<=end) {
       if(a[i]<=a[j]) b[k++] = a[i++];
       else b[k++] = a[j++];
     }
-    if(i>e1) {
-      while(j<=e2) b[k++] = a[j++];
-    }
-    else {
-      while(i<=e1) b[k++] = a[i++];
-    }
+    while(j<=end) b[k++] = a[j++];
+    while(i<=mid) b[k++] = a[i++];
     
-    for(i=s1,k=0; k<len; i++, k++) {
+    for(i=start,k=0; k<len; i++, k++) {
       a[i] = b[k];
     }
   }
@@ -31,7 +25,7 @@ class Solution {
     int mid = start + (end-start)/2;
     mergeSortHelper(a, start, mid);
     mergeSortHelper(a, mid+1, end);
-    merge(a, start, mid, mid+1, end);
+    merge(a, start, mid, end);
   }
   
   
