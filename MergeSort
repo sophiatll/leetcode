@@ -1,0 +1,51 @@
+import java.util.*;
+
+class Solution {
+  
+  
+  void merge(int[] a, int s1, int e1, int s2, int e2){
+    int len = e2-s1+1;
+    int[] b = new int[len];
+    int i=s1; 
+    int j=s2;
+    int k = 0;
+    while(i<=e1 && j<=e2) {
+      if(a[i]<=a[j]) b[k++] = a[i++];
+      else b[k++] = a[j++];
+    }
+    if(i>e1) {
+      while(j<=e2) b[k++] = a[j++];
+    }
+    else {
+      while(i<=e1) b[k++] = a[i++];
+    }
+    
+    for(i=s1,k=0; k<len; i++, k++) {
+      a[i] = b[k];
+    }
+  }
+  
+    
+  void mergeSortHelper(int[] a, int start, int end) {
+    if(start >= end) return;
+    int mid = start + (end-start)/2;
+    mergeSortHelper(a, start, mid);
+    mergeSortHelper(a, mid+1, end);
+    merge(a, start, mid, mid+1, end);
+  }
+  
+  
+  void mergeSort(int a[]) {
+    int start = 0;
+    int end = a.length -1;
+    mergeSortHelper(a, start, end);
+  }
+  
+  
+  public static void main(String[] args) {
+    int[] a1 = new int[]{7,6,5,4,3,2,1};
+    new Solution().mergeSort(a1);
+    System.out.println(Arrays.toString(a1));
+  }
+}
+
