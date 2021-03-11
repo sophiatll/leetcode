@@ -10,18 +10,35 @@ class Solution {
     quickSort(a, p+1, high);
   }
   
+  /*
   public int partition(int[] a, int low, int high) {
     int pilot = a[high];
     int i = low;
+    //i point to the smaller element
     for(int j=low; j<high; j++) {
       if(a[j] < pilot) {
-        swap(a, i, j);
+        swap(a, i, j); //swap for each items which is less than pilot. not very efficient.
         i++;
       }
     }
     swap(a, i, high);
     return i;
   }
+  */
+  
+  public int partition(int[] a, int low, int high) {
+    int pilot = a[high];
+    int i=low; //i point to the smaller one
+    int j=high-1; //j point to the greater one
+    while(i<j) {
+      while(a[i] < pilot) i++;
+      while(j>i && a[j] >= pilot) j--;
+      if(i<j) swap(a, i, j); //swap the samller one and greater one. it decrease the times of swapping compared to above method. 
+    }
+    swap(a, i, high);
+    return i;
+  }
+  
   
   private void swap(int[] a, int i, int j) {
     int temp = a[i];
