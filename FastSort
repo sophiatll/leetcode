@@ -1,0 +1,50 @@
+
+import java.io.*;
+import java.util.*;
+
+class Solution {
+  public void quickSort(int[] a, int low, int high) {
+    if(low >= high) return;
+    int p = partition(a, low, high);
+    quickSort(a, low, p-1);
+    quickSort(a, p+1, high);
+  }
+  
+  public int partition(int[] a, int low, int high) {
+    int pilot = a[high];
+    int i = low;
+    for(int j=low; j<high; j++) {
+      if(a[j] < pilot) {
+        swap(a, i, j);
+        i++;
+      }
+    }
+    swap(a, i, high);
+    return i;
+  }
+  
+  private void swap(int[] a, int i, int j) {
+    int temp = a[i];
+    a[i]=a[j];
+    a[j]=temp;
+  }
+  
+  public static void main(String[] args) {
+    int[] a1 = new int[]{
+      5,4,3,2,1
+    };
+    
+    new Solution().quickSort(a1, 0, a1.length-1);
+    System.out.println(Arrays.toString(a1));
+    
+    a1 = new int[]{
+      5,5,5,5,1,2,3,10
+    };
+    
+    new Solution().quickSort(a1, 0, a1.length-1);
+    System.out.println(Arrays.toString(a1));
+    
+    
+  }
+}
+
